@@ -63,6 +63,22 @@ SetValue () {
   sed -i -e '/^#\?\(\s*'${var//\//\\/}'\s*=\s*\).*/{s//\1'${value//\//\\/}'/;:a;n;ba;q}' -e '$a'${var//\//\\/}'='${value//\//\\/} "$3"
 }
 
+# Comment Key File
+Comment() {
+    local regex="${1:?}"
+    local file="${2:?}"
+    local comment_mark="${3:-#}"
+    sed -ri "s:^([ ]*)($regex):\\1$comment_mark\\2:" "$file"
+}
+
+# uncomment Key File
+Uncomment() {
+    local regex="${1:?}"
+    local file="${2:?}"
+    local comment_mark="${3:-#}"
+    sed -ri "s:^([ ]*)[$comment_mark]+[ ]?([ ]*$regex):\\1\\2:" "$file"
+}
+
 # AskYesNo "Are you sure?" n
 AskYesNo() {
   local userInput
