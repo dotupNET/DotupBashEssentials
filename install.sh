@@ -5,6 +5,7 @@
 # bash <(wget -qO- https://raw.githubusercontent.com/dotupNET/DotupBashEssentials/master/DotupBashEssentials.sh)
 
 cd /tmp
+rm DotupBashEssentials*
 wget https://raw.githubusercontent.com/dotupNET/DotupBashEssentials/master/DotupBashEssentials.sh
 
 . DotupBashEssentials.sh
