@@ -109,7 +109,7 @@ Ask() {
 # answer=$(ReadInput "Delete all folders? [y/N]" n)
 ReadInput() {
   local input
-  echo -e -n "${1}" > /dev/tty
+  echo -e -n "${1}:" > /dev/tty
   read -p "" input
   if [ -z "$input" ]; then
     echo "$2"
