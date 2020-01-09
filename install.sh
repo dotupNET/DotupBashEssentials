@@ -20,7 +20,7 @@ if [ -f "$targetFile" ]; then
   yecho "Existing $targetFile deleted"
 fi
 
-mv DotupBashEssentials.sh "$scriptFolder"
+mv "DotupBashEssentials.sh" "$targetFile"
 
 TryAddLine "\. $targetFile" ~/.bashrc
 
