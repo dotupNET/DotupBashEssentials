@@ -22,6 +22,6 @@ fi
 
 mv DotupBashEssentials.sh "$scriptFolder"
 
-TryAddLine ". $targetFile" ~/.bashrc
+TryAddLine "\\. $targetFile" ~/.bashrc
 
 gecho "Installation completed."
