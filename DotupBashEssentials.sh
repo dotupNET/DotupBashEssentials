@@ -32,6 +32,12 @@ TryAddLine() {
   fi
 }
 
+JoinWith() {
+  local IFS="$1";
+  shift;
+  echo "$*";
+}
+
 SystemUpgrade() {
   sudo apt-get update -y && sudo apt-get upgrade -y
   CheckState;
