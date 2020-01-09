@@ -94,7 +94,11 @@ Ask() {
   fi
 
   while true; do
-    userInput=$(ReadInput "$1 $defaultHint" $defaultAnswer)
+    if [ -n "$defaultHint" ]; then
+      userInput=$(ReadInput "$1 $defaultHint" $defaultAnswer)
+    else
+      userInput=$(ReadInput $1 $defaultAnswer)
+    fi
 
     if [ -n "$userInput" ]; then
 #      echo "${userInput,,}"
@@ -109,7 +113,7 @@ Ask() {
 # answer=$(ReadInput "Delete all folders? [y/N]" n)
 ReadInput() {
   local input
-  echo -e -n "${1}:" > /dev/tty
+  echo -e -n "${1}: " > /dev/tty
   read -p "" input
   if [ -z "$input" ]; then
     echo "$2"
