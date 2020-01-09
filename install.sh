@@ -11,11 +11,9 @@ wget https://raw.githubusercontent.com/dotupNET/DotupBashEssentials/master/Dotup
 
 scriptFolder=$(Ask "Enter path to store bash scripts" "~/scripts")
 
-targetFile=". ${scriptFolder}/DotupBashEssentials.sh"
-
 mkdir -p $scriptFolder
-mv DotupBashEssentials.sh $targetFile
+mv DotupBashEssentials.sh $scriptFolder
 
-TryAddLine $targetFile ~/.bashrc
+TryAddLine ". ${scriptFolder}/DotupBashEssentials.sh" ~/.bashrc
 
 gecho "Installation completed."
