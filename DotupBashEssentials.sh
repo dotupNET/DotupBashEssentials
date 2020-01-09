@@ -12,11 +12,11 @@ STYLE_CYAN='\033[36m'
 STYLE_WHITE='\033[37m'
 
 recho() {
-  echo -e "${STYLE_RED}$@${STYLE_RESET}"
+  echo -e "${STYLE_RED}${@}${STYLE_RESET}"
 }
 
 gecho() {
-  echo -e "${STYLE_GREEN}$@${STYLE_RESET}"
+  echo -e "${STYLE_GREEN}${@}${STYLE_RESET}"
 }
 
 yecho() {
