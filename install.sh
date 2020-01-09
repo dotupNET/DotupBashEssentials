@@ -12,6 +12,6 @@ wget https://raw.githubusercontent.com/dotupNET/DotupBashEssentials/master/Dotup
 chmod +x DotupBashEssentials.sh
 . DotupBashEssentials.sh
 
-TryAddLine ". $scriptFolder/DotupBashEssentials.sh" ~/.bashrc
+TryAddLine ". ${scriptFolder}/DotupBashEssentials.sh" ~/.bashrc
 
 gecho "Installation completed."
