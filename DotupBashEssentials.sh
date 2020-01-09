@@ -20,7 +20,7 @@ gecho() {
 }
 
 yecho() {
-  echo -e "${STYLE_YELLOW}$($@)${STYLE_RESET}"
+  echo -e "${STYLE_YELLOW}${@}${STYLE_RESET}"
 }
 
 # TryAddLine "My nice entry = oha" "/etc/apache2/" (sudo)
