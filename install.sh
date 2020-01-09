@@ -13,6 +13,7 @@ scriptFolder=$(Ask "Enter path to store bash scripts" "~/scripts")
 
 targetFile=". ${scriptFolder}/DotupBashEssentials.sh"
 
+mkdir -p $scriptFolder
 mv DotupBashEssentials.sh $targetFile
 
 TryAddLine $targetFile ~/.bashrc
