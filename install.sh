@@ -10,7 +10,7 @@ wget https://raw.githubusercontent.com/dotupNET/DotupBashEssentials/master/Dotup
 
 . DotupBashEssentials.sh
 
-scriptFolder="$HOME/scripts"
+scriptFolder="${HOME}/scripts"
 scriptFolder=$(Ask "Enter path to store bash scripts" $scriptFolder)
 targetFile="$scriptFolder/DotupBashEssentials.sh"
 
