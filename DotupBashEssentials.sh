@@ -185,3 +185,13 @@ EOF
 
 sudo a2ensite "$1.$2.conf"
 }
+
+# ZipFolder /etc/letsencrypt/live/home-gateway.ml
+ZipFolder() {
+  if [ "$2" = "sudo" ]; then
+    sudo zip -r "$(basename $1).zip" $1
+  else
+    zip -r "$(basename $1).zip" $1
+  fi
+
+}
