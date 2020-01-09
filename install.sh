@@ -4,14 +4,17 @@
 
 # bash <(wget -qO- https://raw.githubusercontent.com/dotupNET/DotupBashEssentials/master/DotupBashEssentials.sh)
 
-scriptFolder=$(Ask "Enter path to store bash scripts" "~/scripts")
-
-cd $scriptFolder
+cd /tmp
 wget https://raw.githubusercontent.com/dotupNET/DotupBashEssentials/master/DotupBashEssentials.sh
 
-chmod +x DotupBashEssentials.sh
 . DotupBashEssentials.sh
 
-TryAddLine ". ${scriptFolder}/DotupBashEssentials.sh" ~/.bashrc
+scriptFolder=$(Ask "Enter path to store bash scripts" "~/scripts")
+
+targetFile=". ${scriptFolder}/DotupBashEssentials.sh"
+
+mv DotupBashEssentials.sh $targetFile
+
+TryAddLine $targetFile ~/.bashrc
 
 gecho "Installation completed."
