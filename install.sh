@@ -13,7 +13,7 @@ wget https://raw.githubusercontent.com/dotupNET/DotupBashEssentials/master/Dotup
 scriptFolder=$(Ask "Enter path to store bash scripts" "~/scripts")
 targetFile="$scriptFolder/DotupBashEssentials.sh"
 
-mkdir -p "$scriptFolder"
+mkdir -p "${scriptFolder}"
 
 if [ -f "$targetFile" ]; then
   rm "$targetFile"
