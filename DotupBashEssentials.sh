@@ -56,6 +56,13 @@ SetIniValue() {
 #  sed -i "/^$2=/s/=.*/=$3/" $4
 }
 
+# SetValue Key NewValue File
+SetValue () {
+  var="$1"
+  value="$2"
+  sed -i -e '/^#\?\(\s*'${var//\//\\/}'\s*=\s*\).*/{s//\1'${value//\//\\/}'/;:a;n;ba;q}' -e '$a'${var//\//\\/}'='${value//\//\\/} "$3"
+}
+
 # AskYesNo "Are you sure?" n
 AskYesNo() {
   local userInput
