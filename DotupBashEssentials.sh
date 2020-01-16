@@ -165,26 +165,26 @@ CheckState() {
 # $2 = domain
 # $3 = port
 # $4 = alias / subfolder
-CreateHttpProxyPassVirtualHost() {
-file="/etc/apache2/sites-available/$1.$2.conf"
-sudo dd of=$file << EOF
-<VirtualHost *:$3>
-  ServerName $1.$2
-  SSLEngine on
-  ProxyPreserveHost On
+# CreateHttpProxyPassVirtualHost() {
+# file="/etc/apache2/sites-available/$1.$2.conf"
+# sudo dd of=$file << EOF
+# <VirtualHost *:$3>
+#   ServerName $1.$2
+#   SSLEngine on
+#   ProxyPreserveHost On
 
-  SSLCertificateFile /etc/letsencrypt/live/$2/fullchain.pem
-  SSLCertificateKeyFile /etc/letsencrypt/live/$2/privkey.pem
+#   SSLCertificateFile /etc/letsencrypt/live/$2/fullchain.pem
+#   SSLCertificateKeyFile /etc/letsencrypt/live/$2/privkey.pem
 
-  ProxyPass /$4 !
+#   ProxyPass /$4 !
 
-  ProxyPass / http://localhost/$4
-  ProxyPassReverse / http://localhost/$4
-</VirtualHost>
-EOF
+#   ProxyPass / http://localhost/$4
+#   ProxyPassReverse / http://localhost/$4
+# </VirtualHost>
+# EOF
 
-sudo a2ensite "$1.$2.conf"
-}
+# sudo a2ensite "$1.$2.conf"
+# }
 
 # ZipFolder /etc/letsencrypt/live/home-gateway.ml
 ZipFolder() {
@@ -193,5 +193,25 @@ ZipFolder() {
   else
     zip -r "$(basename $1).zip" $1
   fi
+
+}
+
+FileBackup() {
+  
+  if sudo [ ! -f $1 ]; then 
+    recho "[ERROR]: file not found: $1" 
+  else
+    cp $1 "$1.$(date +%Y%m%d-%H%M%S)"
+  fi 
+
+}
+
+FileMove() {
+  
+  if sudo [ ! -f $1 ]; then 
+    recho "[ERROR]: file not found: $1" 
+  else
+    mv $1 "$1.$(date +%Y%m%d-%H%M%S)"
+  fi 
 
 }
