@@ -196,22 +196,28 @@ ZipFolder() {
 
 }
 
+# FileBackup /etc/apache2/sites-available/default-ssl.conf (sudo)
 FileBackup() {
-  
   if sudo [ ! -f $1 ]; then 
-    recho "[ERROR]: file not found: $1" 
-  else
-    cp $1 "$1.$(date +%Y%m%d-%H%M%S)"
+    recho "[ERROR]: file not found: $1"
+    return
   fi 
 
+  if [ "$2" = "sudo" ]; then
+    sudo cp $1 "$1.$(date +%Y%m%d-%H%M%S)"
+  else
+    cp $1 "$1.$(date +%Y%m%d-%H%M%S)"
+  fi
 }
 
 FileMove() {
-  
   if sudo [ ! -f $1 ]; then 
     recho "[ERROR]: file not found: $1" 
-  else
-    mv $1 "$1.$(date +%Y%m%d-%H%M%S)"
   fi 
 
+  if [ "$2" = "sudo" ]; then
+    sudo mv $1 "$1.$(date +%Y%m%d-%H%M%S)"
+  else
+    mv $1 "$1.$(date +%Y%m%d-%H%M%S)"
+  fi
 }
