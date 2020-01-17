@@ -212,12 +212,21 @@ FileBackup() {
 
 FileMove() {
   if sudo [ ! -f $1 ]; then 
-    recho "[ERROR]: file not found: $1" 
+    recho "[ERROR]: file not found: $1"
+    return
   fi 
 
   if [ "$2" = "sudo" ]; then
     sudo mv $1 "$1.$(date +%Y%m%d-%H%M%S)"
   else
     mv $1 "$1.$(date +%Y%m%d-%H%M%S)"
+  fi
+}
+
+SudoRequired() {
+  if [ -w $1 ]; then
+    return 1
+  else
+    return 0
   fi
 }
