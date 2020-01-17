@@ -52,7 +52,12 @@ SetIniValue() {
 #  sed -i "/^\[$1\]$/,/^\[/ s/^$2=/s/=.*/=$3/" $4
 #  sed -i "(?<=\[Sky\])([^\[]*Color\s*=)(.+?)$"
 #  sed -i.bak '/^\[test]/,/^\[/{s/^foo[[:space:]]*=.*/foo = foobarbaz/}' test1.ini
-  sed -i "/^\[$1]/,/^\[/{s/^$2[[:space:]]*=.*/$2 = $3/}" $4
+  if SudoRequired $4; then
+    sudo sed -i "/^\[$1]/,/^\[/{s/^$2[[:space:]]*=.*/$2 = $3/}" $4
+  else
+    sed -i "/^\[$1]/,/^\[/{s/^$2[[:space:]]*=.*/$2 = $3/}" $4
+  fi
+
 #  sed -i "/^$2=/s/=.*/=$3/" $4
 }
 
@@ -60,7 +65,11 @@ SetIniValue() {
 SetValue () {
   var="$1"
   value="$2"
-  sed -i -e '/^#\?\(\s*'${var//\//\\/}'\s*=\s*\).*/{s//\1'${value//\//\\/}'/;:a;n;ba;q}' -e '$a'${var//\//\\/}'='${value//\//\\/} "$3"
+  if SudoRequired $3; then
+    sudo sed -i -e '/^#\?\(\s*'${var//\//\\/}'\s*=\s*\).*/{s//\1'${value//\//\\/}'/;:a;n;ba;q}' -e '$a'${var//\//\\/}'='${value//\//\\/} "$3"
+  else
+    sed -i -e '/^#\?\(\s*'${var//\//\\/}'\s*=\s*\).*/{s//\1'${value//\//\\/}'/;:a;n;ba;q}' -e '$a'${var//\//\\/}'='${value//\//\\/} "$3"
+  fi
 }
 
 # Comment Key File
@@ -68,7 +77,11 @@ Comment() {
     local regex="${1:?}"
     local file="${2:?}"
     local comment_mark="${3:-#}"
-    sed -ri "s:^([ ]*)($regex):\\1$comment_mark\\2:" "$file"
+    if SudoRequired $file; then
+      sudo sed -ri "s:^([ ]*)($regex):\\1$comment_mark\\2:" "$file"
+    else
+      sed -ri "s:^([ ]*)($regex):\\1$comment_mark\\2:" "$file"
+    fi
 }
 
 # uncomment Key File
@@ -76,7 +89,11 @@ Uncomment() {
     local regex="${1:?}"
     local file="${2:?}"
     local comment_mark="${3:-#}"
-    sed -ri "s:^([ ]*)[$comment_mark]+[ ]?([ ]*$regex):\\1\\2:" "$file"
+    if SudoRequired $file; then
+      sudo sed -ri "s:^([ ]*)[$comment_mark]+[ ]?([ ]*$regex):\\1\\2:" "$file"
+    else
+      sed -ri "s:^([ ]*)[$comment_mark]+[ ]?([ ]*$regex):\\1\\2:" "$file"
+    fi
 }
 
 # AskYesNo "Are you sure?" n
