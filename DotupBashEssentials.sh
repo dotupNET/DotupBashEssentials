@@ -143,7 +143,7 @@ Ask() {
     if [ -n "$defaultHint" ]; then
       userInput=$(ReadInput "$1 $defaultHint" $defaultAnswer)
     else
-      userInput=$(ReadInput $1 $defaultAnswer)
+      userInput=$(ReadInput "$1" $defaultAnswer)
     fi
 
     if [ -n "$userInput" ]; then
