@@ -247,3 +247,7 @@ SudoRequired() {
     return 0
   fi
 }
+
+EtcCommit() {
+  sudo -E etckeeper commit "$@"
+}
