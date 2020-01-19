@@ -251,3 +251,12 @@ SudoRequired() {
 EtcCommit() {
   sudo -E etckeeper commit "$@"
 }
+
+SysUsbInfo() {
+  yecho "USB Devices:"
+  lsusb
+  echo ""
+  lsblk
+  echo ""
+  df -h
+}
