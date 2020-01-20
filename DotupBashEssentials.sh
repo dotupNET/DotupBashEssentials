@@ -249,6 +249,12 @@ SudoRequired() {
 }
 
 EtcCommit() {
+
+  if [ -z $SSH_AUTH_SOCK ]; then
+    eval $(ssh-agent)
+    ssh-add ~/.ssh/github_rsa
+  fi
+
   sudo -E etckeeper commit "$@"
 }
 
