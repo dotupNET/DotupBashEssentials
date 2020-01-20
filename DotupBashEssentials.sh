@@ -249,13 +249,15 @@ SudoRequired() {
 }
 
 EtcCommit() {
+  StartSshAgent
+  sudo -E etckeeper commit "$@"
+}
 
+StartSshAgent() {
   if [ -z $SSH_AUTH_SOCK ]; then
     eval $(ssh-agent)
     ssh-add ~/.ssh/github_rsa
   fi
-
-  sudo -E etckeeper commit "$@"
 }
 
 SysUsbInfo() {
@@ -269,6 +271,8 @@ SysUsbInfo() {
 
 InitializeGit() {
 
+  StartSshAgent
+  
   userName=$(git config --global user.name)
   userEmail=$(git config --global user.email)
 
