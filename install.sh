@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 
 # This script installs dotup bash essentials into your script folder and makes it available global
 
