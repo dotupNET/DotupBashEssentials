@@ -266,3 +266,30 @@ SysUsbInfo() {
   echo ""
   df -h
 }
+
+InitializeGit() {
+
+  userName=$(git config --global user.name)
+  userEmail=$(git config --global user.email)
+
+#  if [ -z "$userName" -o -z "$userEmail" ]; then
+  userName=$(Ask "Enter github user name" $userName)
+  userEmail=$(Ask "Enter github email" $userEmail)
+
+  git config --global user.name $userName
+  git config --global user.email $userEmail
+#  fi
+
+  git config --global credential.helper store
+
+  githubPassphrase=$(Ask "Enter passphrase")
+  rsaFile="/home/$(whoami)/.ssh/github_rsa"
+  ssh-keygen -t rsa -b 4096 -C $userName -f $rsaFile -N $githubPassphrase
+  ssh-add $rsaFile
+
+  yecho $(cat "$rsaFile.pub")
+
+  yecho "You've to configure github before you use github."
+  AskYesNo "Have you configured github for ssh access?"
+
+}
