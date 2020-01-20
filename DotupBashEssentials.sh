@@ -205,7 +205,7 @@ CheckState() {
 
 # ZipFolder /etc/letsencrypt/live/home-gateway.ml
 ZipFolder() {
-  if [ "$2" = "sudo" ]; then
+  if SudoRequired $1; then
     sudo zip -r "$(basename $1).zip" $1
   else
     zip -r "$(basename $1).zip" $1
@@ -220,7 +220,7 @@ FileBackup() {
     return
   fi 
 
-  if [ "$2" = "sudo" ]; then
+  if SudoRequired $1; then
     sudo cp $1 "$1.$(date +%Y%m%d-%H%M%S)"
   else
     cp $1 "$1.$(date +%Y%m%d-%H%M%S)"
@@ -233,7 +233,7 @@ FileMove() {
     return
   fi 
 
-  if [ "$2" = "sudo" ]; then
+  if SudoRequired $1; then
     sudo mv $1 "$1.$(date +%Y%m%d-%H%M%S)"
   else
     mv $1 "$1.$(date +%Y%m%d-%H%M%S)"
