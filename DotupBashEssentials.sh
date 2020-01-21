@@ -254,10 +254,21 @@ EtcCommit() {
 }
 
 StartSshAgent() {
-  if [ -z $SSH_AUTH_SOCK ]; then
-    eval $(ssh-agent)
-    ssh-add ~/.ssh/github_rsa
+
+  if [ "$?" == 2 ]; then
+    test -r ~/.ssh-agent && eval "$(<~/.ssh-agent -t 18000)" >/dev/null
+
+    ssh-add -l ~/.ssh/github_rsa &>/dev/null
+    if [ "$?" == 2 ]; then
+      (umask 066; ssh-agent > ~/.ssh-agent)
+      eval "$(<~/.ssh-agent -t 18000)" >/dev/null
+      ssh-add ~/.ssh/github_rsa
+    fi
   fi
+  # if [ -z $SSH_AUTH_SOCK ]; then
+  #   eval $(ssh-agent)
+  #   ssh-add ~/.ssh/github_rsa
+  # fi
 }
 
 SysUsbInfo() {
