@@ -213,6 +213,14 @@ ZipFolder() {
 
 }
 
+FileExists() {
+  if sudo [ ! -f $1 ]; then 
+    return 1
+  else
+    return 0
+  fi
+}
+
 # FileBackup /etc/apache2/sites-available/default-ssl.conf (sudo)
 FileBackup() {
   if sudo [ ! -f $1 ]; then 
