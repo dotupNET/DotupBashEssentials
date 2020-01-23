@@ -316,3 +316,13 @@ InitializeGit() {
   AskYesNo "Have you configured github for ssh access?"
 
 }
+
+MoveLog() {
+
+sudo service rsyslog stop
+sudo mv /var/log/ /var/log.old
+sudo mv /tmp/ /tmp.old
+sudo ln -s /media/usb01/log /var/log
+sudo ln -s /media/usb01/tmp /tmp
+sudo reboot
+}
