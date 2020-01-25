@@ -334,3 +334,21 @@ sudo ln -s /media/usb01/log /var/log
 sudo ln -s /media/usb01/tmp /tmp
 sudo reboot
 }
+
+# FindFiles /media/usb02/nextcloud *.ini
+FindFiles() {
+  if SudoRequired $1; then
+    sudo find /media/usb02/nextcloud -type f -name $2
+  else
+    sudo find /media/usb02/nextcloud -type f -name $2
+  fi
+}
+
+# DeleteFiles /media/usb02/nextcloud *.ini
+DeleteFiles() {
+  if SudoRequired $1; then
+    sudo find /media/usb02/nextcloud -type f -name $2 -delete
+  else
+    sudo find /media/usb02/nextcloud -type f -name $2 -delete
+  fi
+}
