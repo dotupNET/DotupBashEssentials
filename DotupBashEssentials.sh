@@ -257,26 +257,34 @@ SudoRequired() {
 }
 
 EtcCommit() {
+  cd /etc
   StartSshAgent
   sudo -E etckeeper commit "$@"
+  sudo -E git push
+}
+
+EtcPush() {
+  cd /etc
+  StartSshAgent
+  sudo -E git push
 }
 
 StartSshAgent() {
 
-  if [ "$?" == 2 ]; then
-    test -r ~/.ssh-agent && eval "$(<~/.ssh-agent -t 18000)" >/dev/null
+  # if [ "$?" == 2 ]; then
+  #   test -r ~/.ssh-agent && eval "$(<~/.ssh-agent -t 18000)" >/dev/null
 
-    ssh-add -l ~/.ssh/github_rsa &>/dev/null
-    if [ "$?" == 2 ]; then
-      (umask 066; ssh-agent > ~/.ssh-agent)
-      eval "$(<~/.ssh-agent -t 18000)" >/dev/null
-      ssh-add ~/.ssh/github_rsa
-    fi
-  fi
-  # if [ -z $SSH_AUTH_SOCK ]; then
-  #   eval $(ssh-agent)
-  #   ssh-add ~/.ssh/github_rsa
+  #   ssh-add -l ~/.ssh/github_rsa &>/dev/null
+  #   if [ "$?" == 2 ]; then
+  #     (umask 066; ssh-agent > ~/.ssh-agent)
+  #     eval "$(<~/.ssh-agent -t 18000)" >/dev/null
+  #     ssh-add ~/.ssh/github_rsa
+  #   fi
   # fi
+  if [ -z $SSH_AUTH_SOCK ]; then
+    eval $(ssh-agent)
+    ssh-add ~/.ssh/github_rsa
+  fi
 }
 
 SysUsbInfo() {
