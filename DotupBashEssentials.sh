@@ -257,16 +257,22 @@ SudoRequired() {
 }
 
 EtcCommit() {
+  local cmd
+  cwd=$(pwd)
   cd /etc
   StartSshAgent
   sudo -E etckeeper commit "$@"
   sudo -E git push
+  cd $cwd  
 }
 
 EtcPush() {
+  local cmd
+  cwd=$(pwd)
   cd /etc
   StartSshAgent
   sudo -E git push
+  cd $cwd  
 }
 
 StartSshAgent() {
