@@ -358,3 +358,7 @@ DeleteFiles() {
     sudo find /media/usb02/nextcloud -type f -name $2 -delete
   fi
 }
+
+FlushDns() {
+	sudo systemd-resolve --flush-caches
+}
