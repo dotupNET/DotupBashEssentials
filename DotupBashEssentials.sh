@@ -325,10 +325,10 @@ InitializeGit() {
 
   rsaFile="/home/$(whoami)/.ssh/github_rsa"
 
-  if [ -z "$githubPassphrase" ]; then
-    ssh-keygen -t rsa -b 4096 -C $userName -f $rsaFile
+  if [ -z $githubPassphrase ]; then
+    ssh-keygen -t rsa -b 4096 -C $userName -f "$rsaFile"
   else
-    ssh-keygen -t rsa -b 4096 -C $userName -f $rsaFile -N $githubPassphrase
+    ssh-keygen -t rsa -b 4096 -C $userName -f "$rsaFile" -N $githubPassphrase
   fi
 
   ssh-add $rsaFile
