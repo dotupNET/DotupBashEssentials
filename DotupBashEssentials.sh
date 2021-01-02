@@ -295,11 +295,13 @@ StartSshAgent() {
 
 SysUsbInfo() {
   yecho "USB Devices:"
-  lsusb
+  sudo lsusb
   echo ""
-  lsblk
+  sudo lsblk
   echo ""
   df -h
+  echo ""
+  sudo blkid
 }
 
 InitializeGit() {
@@ -320,8 +322,15 @@ InitializeGit() {
   git config --global credential.helper store
 
   githubPassphrase=$(Ask "Enter passphrase")
+
   rsaFile="/home/$(whoami)/.ssh/github_rsa"
-  ssh-keygen -t rsa -b 4096 -C $userName -f $rsaFile -N $githubPassphrase
+
+  if [ -z "$githubPassphrase" ]; then
+    ssh-keygen -t rsa -b 4096 -C $userName -f $rsaFile
+  else
+    ssh-keygen -t rsa -b 4096 -C $userName -f $rsaFile -N $githubPassphrase
+  fi
+
   ssh-add $rsaFile
 
   yecho $(cat "$rsaFile.pub")
@@ -357,4 +366,8 @@ DeleteFiles() {
   else
     sudo find /media/usb02/nextcloud -type f -name $2 -delete
   fi
+}
+
+FlushDns() {
+	sudo systemd-resolve --flush-caches
 }
