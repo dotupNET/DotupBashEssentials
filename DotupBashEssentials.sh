@@ -213,6 +213,7 @@ ZipFolder() {
 
 }
 
+# if FileExists $vhostFile; then
 FileExists() {
   if sudo [ ! -f $1 ]; then 
     return 1
@@ -370,4 +371,21 @@ DeleteFiles() {
 
 FlushDns() {
 	sudo systemd-resolve --flush-caches
+}
+
+# ArrayContainsElement "find" "${array[@]}"
+ArrayContainsElement () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
+# Contains find text
+Contains(){
+if [[ $2 == *"$1"* ]]; then
+  return 0
+else
+  return 1
+fi
 }
