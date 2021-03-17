@@ -215,11 +215,16 @@ ZipFolder() {
 
 # if FileExists $vhostFile; then
 FileExists() {
-  if sudo [ ! -f $1 ]; then 
-    return 1
+  if SudoRequired $1; then
+    if sudo [ ! -f $1 ]; then 
+      return 1
+    fi
   else
-    return 0
+    if [ ! -f $1 ]; then
+      return 1
+    fi
   fi
+  return 0
 }
 
 # FileBackup /etc/apache2/sites-available/default-ssl.conf (sudo)
@@ -388,4 +393,31 @@ if [[ $2 == *"$1"* ]]; then
 else
   return 1
 fi
+}
+
+# RegisterSshClient "remote" "user" "name" 
+RegisterSshClient() {
+  if [ -z "$1" ]; then
+    remote=$(Ask "Enter remote name or ip:")
+  else
+    remote=$1
+  fi
+  if [ -z "$2" ]; then
+    user=$(Ask "Enter user on remote:")
+  else
+    user=$2
+  fi
+  if [ -z "$name" ]; then
+    name=$remote
+  fi
+
+  if ! FileExists "/home/$USER/.ssh/$name"; then
+  # if [ -z "$name" ]; then
+    ssh-keygen -t ed25519 -f "/home/$USER/.ssh/$name"
+  fi
+
+  export USER_AT_HOST="$user@$remote"
+  export PUBKEYPATH="/home/$USER/.ssh/$name.pub"
+  ssh-copy-id -i "$PUBKEYPATH" "$USER_AT_HOST"
+
 }
