@@ -412,7 +412,6 @@ RegisterSshClient() {
   fi
 
   if ! FileExists "/home/$USER/.ssh/$name"; then
-  # if [ -z "$name" ]; then
     ssh-keygen -t ed25519 -f "/home/$USER/.ssh/$name"
   fi
 
